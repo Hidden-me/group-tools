@@ -19,7 +19,6 @@ public class CheckerResult {
 
     @Override
     public String toString() {
-        // TODO: more detailed info
         return succeeds() ? "PASS" : "FAIL: " + counterExample;
     }
 

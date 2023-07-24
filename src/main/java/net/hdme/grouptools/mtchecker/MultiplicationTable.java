@@ -1,8 +1,5 @@
 package net.hdme.grouptools.mtchecker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <p>
  *     A multiplication table is a 2D table that meets these requirements:
@@ -99,13 +96,13 @@ public class MultiplicationTable {
         table = new int[size + 1][size + 1];
         for (int i = 1; i <= size; i++) {
             // split the current row into elements
-            String[] cols = rows[i].split(colDelim);
+            String[] cols = rows[i - 1].split(colDelim);
             if (size != cols.length) {
                 throw new IllegalArgumentException("The table should have the same number of rows and columns");
             }
             // parse each element in the row
             for (int j = 1; j <= size; j++) {
-                table[i][j] = Integer.parseInt(cols[j]);
+                table[i][j] = Integer.parseInt(cols[j - 1]);
             }
         }
         // assign table elements
@@ -127,6 +124,14 @@ public class MultiplicationTable {
             throw new IllegalArgumentException("The second operand should be within [0,size]");
         }
         return table[e1][e2];
+    }
+
+    /**
+     * Get the size of a group set, excluding the identity element.
+     * @return the number of elements excluding identity
+     */
+    public int getSize() {
+        return size;
     }
 
 }

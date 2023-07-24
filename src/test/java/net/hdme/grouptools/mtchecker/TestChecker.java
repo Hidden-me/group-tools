@@ -8,25 +8,47 @@ import java.io.*;
 
 public class TestChecker {
 
-    private MTChecker checker = new MTChecker();
+    private final MTChecker checker = new MTChecker();
 
     @Test
     public void testAll() {
-        testFile("tests/tests_pass");
+        testFile("tests/tests_pass", -1);
     }
 
     /**
      * Test against test cases in the specified file.
      * @param filename the name of the file containing test cases
+     * @param target specify the target line; a negative value indicates all lines
      */
-    @Test
-    public void testFile(String filename) {
+    public void testFile(String filename, int target) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
+            int count = 0;
+            boolean pass = true;
             while ((line = reader.readLine()) != null) {
                 if (!line.isBlank()) {
-                    testLine(line);
+                    count++;
+                    // skip not targeted lines
+                    if (target >= 0 && target != count) {
+                        continue;
+                    }
+                    // it is the target line
+                    // or no target is specified
+                    try {
+                        testLine(line);
+                    } catch (AssertionError e) {
+                        System.err.println("Broken assertion at line " + count + ": ");
+                        e.printStackTrace();
+                        pass = false;
+                    } catch (Throwable e) {
+                        System.err.println("Exception at line " + count + ": ");
+                        e.printStackTrace();
+                        pass = false;
+                    }
                 }
+            }
+            if (!pass) {
+                Assertions.fail("Tests failed.");
             }
         } catch (IOException e) {
             Assertions.fail(e.getMessage());
@@ -39,9 +61,7 @@ public class TestChecker {
      * <code>table|result</code>.
      * @param line the string representing the test case
      */
-    @Test
     public void testLine(String line) {
-        // TODO: parse and test
         String[] arr = line.split("\\|");
         assert arr.length == 2;
         String input = arr[0], expectedStr = arr[1];
