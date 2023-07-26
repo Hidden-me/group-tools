@@ -6,7 +6,8 @@ import net.hdme.grouptools.mtchecker.result.NotAssociative;
 import net.hdme.grouptools.mtchecker.result.NotReversible;
 
 /**
- * A checker for multiplication tables.
+ * A MTChecker checks whether a multiplication table
+ * represents a group.
  */
 public class MTChecker {
 

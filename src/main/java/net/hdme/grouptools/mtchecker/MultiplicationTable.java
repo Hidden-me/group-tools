@@ -1,5 +1,7 @@
 package net.hdme.grouptools.mtchecker;
 
+import net.hdme.grouptools.util.TableUtils;
+
 /**
  * <p>
  *     A multiplication table is a 2D table that meets these requirements:
@@ -65,13 +67,7 @@ public class MultiplicationTable {
     /**
      * Specify a table using a string.
      * The string should describe rows sequentially.
-     * <p>
-     *     The format of the string:
-     *     <code>row1 rowDelim row2 ... rowDelim rowN</code>
-     *     <br/>
-     *     The format of a row:
-     *     <code>e1 colDelim e2 ... colDelim eN</code>
-     * </p>
+     * See {@link net.hdme.grouptools.util.TableUtils#parseTableSquare1Based(String, String, String)} for details of the table string format.
      * <p>
      *     Unlike {@link #MultiplicationTable(int[][])},
      *     the table represented by the string does not need paddings,
@@ -81,32 +77,15 @@ public class MultiplicationTable {
      * @param rowDelim the row delimiter
      * @param colDelim the column delimiter
      * @see #MultiplicationTable(int[][])
+     * @see net.hdme.grouptools.util.TableUtils#parseTableSquare1Based(String, String, String)
      */
     public MultiplicationTable(String tableStr, String rowDelim, String colDelim) {
-        // empty string
-        if (tableStr.isEmpty()) {
-            size = 0;
-            table = new int[1][1];
-            table[0][0] = 0;
-            return;
-        }
-        // parse and check the string
-        String[] rows = tableStr.split(rowDelim);
-        size = rows.length;
-        table = new int[size + 1][size + 1];
-        for (int i = 1; i <= size; i++) {
-            // split the current row into elements
-            String[] cols = rows[i - 1].split(colDelim);
-            if (size != cols.length) {
-                throw new IllegalArgumentException("The table should have the same number of rows and columns");
-            }
-            // parse each element in the row
-            for (int j = 1; j <= size; j++) {
-                table[i][j] = Integer.parseInt(cols[j - 1]);
-            }
-        }
-        // assign table elements
+        // parse the string
+        table = TableUtils.parseTableSquare1Based(tableStr, rowDelim, colDelim);
+        size = table.length - 1;
+        // check table validity
         checkTable(table);
+        // fill the 0-th row/column
         init0thRowCol(table, size);
     }
 

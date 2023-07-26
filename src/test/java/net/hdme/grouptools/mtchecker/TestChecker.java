@@ -12,7 +12,7 @@ public class TestChecker {
 
     @Test
     public void testAll() {
-        testFile("tests/tests_pass", -1);
+        testFile("tests/tests_mtchecker", -1);
     }
 
     /**
@@ -26,8 +26,8 @@ public class TestChecker {
             int count = 0;
             boolean pass = true;
             while ((line = reader.readLine()) != null) {
+                count++;
                 if (!line.isBlank()) {
-                    count++;
                     // skip not targeted lines
                     if (target >= 0 && target != count) {
                         continue;
@@ -36,6 +36,7 @@ public class TestChecker {
                     // or no target is specified
                     try {
                         testLine(line);
+                        System.out.println("Line " + count + " passed.");
                     } catch (AssertionError e) {
                         System.err.println("Broken assertion at line " + count + ": ");
                         e.printStackTrace();
