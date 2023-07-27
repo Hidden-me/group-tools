@@ -16,7 +16,7 @@ public class TestCase {
     public FinderResult expected;
 
     private int[][] parseTemplate(String str) {
-        return TableUtils.parseTableSquare1Based(str, ROW_DELIM, COLUMN_DELIM);
+        return TableUtils.parseTableSquareNBased(str, ROW_DELIM, COLUMN_DELIM, 0);
     }
 
     private MultiplicationTable parseTable(String str) {

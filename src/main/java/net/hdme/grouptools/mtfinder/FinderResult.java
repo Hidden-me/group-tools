@@ -22,4 +22,9 @@ public class FinderResult {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return tables.toString();
+    }
+
 }

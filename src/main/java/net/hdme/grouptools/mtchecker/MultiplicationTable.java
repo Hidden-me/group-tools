@@ -2,6 +2,8 @@ package net.hdme.grouptools.mtchecker;
 
 import net.hdme.grouptools.util.TableUtils;
 
+import java.util.Arrays;
+
 /**
  * <p>
  *     A multiplication table is a 2D table that meets these requirements:
@@ -30,7 +32,7 @@ public class MultiplicationTable {
         for (int i = 1; i <= size; i++) table[i][0] = i;
     }
 
-    private void checkTable(int[][] table) {
+    private void checkTable() {
         if (table.length == 0) {
             throw new IllegalArgumentException("The table size should be positive");
         }
@@ -56,18 +58,18 @@ public class MultiplicationTable {
      * @param table the 2D array with paddings
      */
     public MultiplicationTable(int[][] table) {
-        // check arguments
-        checkTable(table);
-        // override the 0th row/column
         size = table.length - 1;
-        init0thRowCol(table, size);
         this.table = table;
+        // check arguments
+        checkTable();
+        // override the 0th row/column
+        init0thRowCol(table, size);
     }
 
     /**
      * Specify a table using a string.
      * The string should describe rows sequentially.
-     * See {@link net.hdme.grouptools.util.TableUtils#parseTableSquare1Based(String, String, String)} for details of the table string format.
+     * See {@link TableUtils#parseTableSquareNBased(String, String, String, int)} for details of the table string format.
      * <p>
      *     Unlike {@link #MultiplicationTable(int[][])},
      *     the table represented by the string does not need paddings,
@@ -77,14 +79,14 @@ public class MultiplicationTable {
      * @param rowDelim the row delimiter
      * @param colDelim the column delimiter
      * @see #MultiplicationTable(int[][])
-     * @see net.hdme.grouptools.util.TableUtils#parseTableSquare1Based(String, String, String)
+     * @see TableUtils#parseTableSquareNBased(String, String, String, int)
      */
     public MultiplicationTable(String tableStr, String rowDelim, String colDelim) {
         // parse the string
-        table = TableUtils.parseTableSquare1Based(tableStr, rowDelim, colDelim);
+        table = TableUtils.parseTableSquareNBased(tableStr, rowDelim, colDelim, 1);
         size = table.length - 1;
         // check table validity
-        checkTable(table);
+        checkTable();
         // fill the 0-th row/column
         init0thRowCol(table, size);
     }
@@ -111,6 +113,24 @@ public class MultiplicationTable {
      */
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MultiplicationTable mt) {
+            return Arrays.deepEquals(table, mt.table);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(table);
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.deepToString(table);
     }
 
 }
