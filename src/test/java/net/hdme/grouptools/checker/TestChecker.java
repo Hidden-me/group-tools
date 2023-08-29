@@ -1,6 +1,7 @@
-package net.hdme.grouptools.mtchecker;
+package net.hdme.grouptools.checker;
 
-import net.hdme.grouptools.mtchecker.result.CheckerResult;
+import net.hdme.grouptools.base.BinaryOperation;
+import net.hdme.grouptools.checker.result.CheckerResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,11 +9,11 @@ import java.io.*;
 
 public class TestChecker {
 
-    private final MTChecker checker = new MTChecker();
+    private final Checker checker = new Checker();
 
     @Test
     public void testAll() {
-        testFile("tests/tests_mtchecker", -1);
+        testFile("tests/tests_checker", -1);
     }
 
     /**
@@ -66,8 +67,8 @@ public class TestChecker {
         String[] arr = line.split("\\|");
         assert arr.length == 2;
         String input = arr[0], expectedStr = arr[1];
-        // parse the input multiplication table & check validity
-        MultiplicationTable table = new MultiplicationTable(input, ";", ",");
+        // parse the input table & check validity
+        BinaryOperation table = new BinaryOperation(input, ";", ",");
         CheckerResult result = checker.check(table);
         // check whether the result is expected
         boolean expected = Boolean.parseBoolean(expectedStr);

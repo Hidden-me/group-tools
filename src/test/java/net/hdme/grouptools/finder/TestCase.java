@@ -1,6 +1,6 @@
-package net.hdme.grouptools.mtfinder;
+package net.hdme.grouptools.finder;
 
-import net.hdme.grouptools.mtchecker.MultiplicationTable;
+import net.hdme.grouptools.base.BinaryOperation;
 import net.hdme.grouptools.util.TableUtils;
 
 import java.io.BufferedReader;
@@ -19,8 +19,8 @@ public class TestCase {
         return TableUtils.parseTableSquareNBased(str, ROW_DELIM, COLUMN_DELIM, 0);
     }
 
-    private MultiplicationTable parseTable(String str) {
-        return new MultiplicationTable(str, ROW_DELIM, COLUMN_DELIM);
+    private BinaryOperation parseTable(String str) {
+        return new BinaryOperation(str, ROW_DELIM, COLUMN_DELIM);
     }
 
     private TestCase(BufferedReader reader) throws IOException {
@@ -31,7 +31,7 @@ public class TestCase {
         input = parseTemplate(arr[0]);
         // N lines
         int n = Integer.parseInt(arr[1]);
-        List<MultiplicationTable> tables = new ArrayList<>(n);
+        List<BinaryOperation> tables = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
             line = reader.readLine();
             assert line != null;

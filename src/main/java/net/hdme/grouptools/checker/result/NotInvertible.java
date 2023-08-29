@@ -1,8 +1,8 @@
-package net.hdme.grouptools.mtchecker.result;
+package net.hdme.grouptools.checker.result;
 
-import net.hdme.grouptools.mtchecker.MultiplicationTable;
+import net.hdme.grouptools.base.BinaryOperation;
 
-public class NotReversible extends CounterExample {
+public class NotInvertible extends CounterExample {
 
     private final int a;
     private final boolean left;
@@ -12,7 +12,7 @@ public class NotReversible extends CounterExample {
      * forall x. a * x != e (when !left)
      * or forall x. x * a != e (when left)
      */
-    public NotReversible(MultiplicationTable table, int a, boolean left) {
+    public NotInvertible(BinaryOperation table, int a, boolean left) {
         super(table);
         this.a = a;
         this.left = left;
@@ -24,17 +24,17 @@ public class NotReversible extends CounterExample {
      *   <code>left</code>, or on the right side otherwise
      */
     @Override
-    protected boolean check(MultiplicationTable table) {
+    protected boolean check(BinaryOperation table) {
         if (left) {
             // whether "a" has inverse on its left side
-            for (int x = 1, bound = table.getSize(); x <= bound; x++) {
+            for (int x = 0, bound = table.getSize(); x < bound; x++) {
                 if (table.multiply(x, a) == 0) {
                     return false;
                 }
             }
         } else {
             // whether "a" has inverse on its right side
-            for (int x = 1, bound = table.getSize(); x <= bound; x++) {
+            for (int x = 0, bound = table.getSize(); x < bound; x++) {
                 if (table.multiply(a, x) == 0) {
                     return false;
                 }
@@ -44,10 +44,10 @@ public class NotReversible extends CounterExample {
     }
 
     @Override
-    protected String toString(MultiplicationTable table) {
+    protected String toString(BinaryOperation table) {
         return a + " has no inverse on its "
                 + (left ? "left" : "right")
-                + " side, which breaks reversibility";
+                + " side, which breaks invertibility";
     }
 
 }

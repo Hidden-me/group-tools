@@ -1,6 +1,6 @@
-package net.hdme.grouptools.mtfinder;
+package net.hdme.grouptools.finder;
 
-import net.hdme.grouptools.mtchecker.MultiplicationTable;
+import net.hdme.grouptools.base.BinaryOperation;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class FinderResult {
 
-    public final Set<MultiplicationTable> tables;
+    public final Set<BinaryOperation> tables;
 
-    public FinderResult(Collection<MultiplicationTable> tables) {
+    public FinderResult(Collection<BinaryOperation> tables) {
         this.tables = new HashSet<>(tables);
     }
 

@@ -1,7 +1,7 @@
-package net.hdme.grouptools.mtfinder;
+package net.hdme.grouptools.finder;
 
-import net.hdme.grouptools.mtchecker.MTChecker;
-import net.hdme.grouptools.mtchecker.MultiplicationTable;
+import net.hdme.grouptools.checker.Checker;
+import net.hdme.grouptools.base.BinaryOperation;
 import net.hdme.grouptools.util.TableUtils;
 
 import java.util.HashSet;
@@ -11,12 +11,13 @@ import java.util.Set;
 
 /**
  * Given a partially filled multiplication table,
- * a MTFinder searches for all tables representing a group.
+ * a Finder searches for all tables representing a group.
+ * 0 is assumed to be the identity element.
  */
-public class MTFinder {
+public class Finder {
 
-    private final MTChecker checker = new MTChecker();
-    private List<MultiplicationTable> results;
+    private final Checker checker = new Checker();
+    private List<BinaryOperation> results;
 
     // add 0-th row/column
     // a[i,0]=a[0,i]=i
@@ -63,7 +64,7 @@ public class MTFinder {
         if (depth >= size * size) {
             int[][] copy = TableUtils.copyTable(table);
             assert copy != null;
-            MultiplicationTable mt = new MultiplicationTable(copy);
+            BinaryOperation mt = new BinaryOperation(copy);
             if (checker.check(mt).succeeds()) {
                 results.add(mt);
             }

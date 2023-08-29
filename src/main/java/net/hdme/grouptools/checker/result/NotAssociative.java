@@ -1,12 +1,12 @@
-package net.hdme.grouptools.mtchecker.result;
+package net.hdme.grouptools.checker.result;
 
-import net.hdme.grouptools.mtchecker.MultiplicationTable;
+import net.hdme.grouptools.base.BinaryOperation;
 
 public class NotAssociative extends CounterExample {
 
     private final int a, b, c;
 
-    private String calculateString(MultiplicationTable table, int a, int b, int c, boolean rightAssoc) {
+    private String buildString(BinaryOperation table, int a, int b, int c, boolean rightAssoc) {
         StringBuilder sb = new StringBuilder();
         if (rightAssoc) {
             sb.append(a).append(" * (").append(b)
@@ -30,7 +30,7 @@ public class NotAssociative extends CounterExample {
      * Create a counter-example:
      * (a * b) * c != a * (b * c)
      */
-    public NotAssociative(MultiplicationTable table, int a, int b, int c) {
+    public NotAssociative(BinaryOperation table, int a, int b, int c) {
         super(table);
         this.a = a;
         this.b = b;
@@ -38,7 +38,7 @@ public class NotAssociative extends CounterExample {
     }
 
     @Override
-    protected boolean check(MultiplicationTable table) {
+    protected boolean check(BinaryOperation table) {
         int left = table.multiply(a, b);
         left = table.multiply(left, c);
         int right = table.multiply(b, c);
@@ -47,10 +47,10 @@ public class NotAssociative extends CounterExample {
     }
 
     @Override
-    protected String toString(MultiplicationTable table) {
-        return calculateString(table, a, b, c, false)
+    protected String toString(BinaryOperation table) {
+        return buildString(table, a, b, c, false)
                 + ", but "
-                + calculateString(table, a, b, c, true)
+                + buildString(table, a, b, c, true)
                 + ", which breaks associativity";
     }
 

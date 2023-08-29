@@ -1,4 +1,4 @@
-package net.hdme.grouptools.mtfinder;
+package net.hdme.grouptools.finder;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,11 +9,11 @@ import java.io.LineNumberReader;
 
 public class TestFinder {
 
-    private final MTFinder finder = new MTFinder();
+    private final Finder finder = new Finder();
 
     @Test
     public void testAll() {
-        testFile("tests/tests_mtfinder", -1);
+        testFile("tests/tests_finder", -1);
     }
 
     /**

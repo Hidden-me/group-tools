@@ -1,12 +1,12 @@
-package net.hdme.grouptools.mtchecker.result;
+package net.hdme.grouptools.checker.result;
 
-import net.hdme.grouptools.mtchecker.MultiplicationTable;
+import net.hdme.grouptools.base.BinaryOperation;
 
 public abstract class CounterExample {
 
-    private final MultiplicationTable table;
+    private final BinaryOperation table;
 
-    public CounterExample(MultiplicationTable table) {
+    public CounterExample(BinaryOperation table) {
         this.table = table;
     }
 
@@ -20,9 +20,9 @@ public abstract class CounterExample {
      * @param table the binary operation in the counter-example
      * @return whether the counter-example IS an example of its current type
      */
-    protected abstract boolean check(MultiplicationTable table);
+    protected abstract boolean check(BinaryOperation table);
 
-    protected abstract String toString(MultiplicationTable table);
+    protected abstract String toString(BinaryOperation table);
 
     @Override
     public String toString() {

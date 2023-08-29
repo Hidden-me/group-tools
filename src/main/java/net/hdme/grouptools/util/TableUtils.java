@@ -4,13 +4,13 @@ public class TableUtils {
 
     /**
      * Parse a string as a table whose width and height equal
-     * and the row/column with index 1 is the first row/column.
-     * The i-th (forall 0<=i<base) row and column are left undefined.
+     * and rows/columns start at the index <code>base</code>.
+     * The i-th (forall i in [0,base)) row and column are left undefined.
      * <p>
      * The format of the string:
      * <code>row1 rowDelim row2 ... rowDelim rowN</code>
      * <br/>
-     * The format of a row:
+     * The format of each row:
      * <code>e1 colDelim e2 ... colDelim eN</code>
      * </p>
      *
@@ -18,7 +18,7 @@ public class TableUtils {
      * @param rowDelim the row delimiter
      * @param colDelim the column delimiter
      * @param base the starting index
-     * @return a one-based square table
+     * @return a <code>base</code>-based square table with paddings
      */
     public static int[][] parseTableSquareNBased(String tableStr, String rowDelim, String colDelim, int base) {
         // empty string
@@ -43,11 +43,16 @@ public class TableUtils {
         return table;
     }
 
+    /**
+     * Copy the given table.
+     * @param table the original table
+     * @return a copy of <code>table</code>
+     */
     public static int[][] copyTable(int[][] table) {
         int rowCount = table.length;
-        if (rowCount <= 0) return null;
+        if (rowCount == 0) return null;
         int colCount = table[0].length;
-        if (colCount <= 0) return null;
+        if (colCount == 0) return null;
         int[][] copy = new int[rowCount][colCount];
         for (int i = 0; i < rowCount; i++) {
             System.arraycopy(table[i], 0, copy[i], 0, colCount);
